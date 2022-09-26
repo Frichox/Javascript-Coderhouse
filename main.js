@@ -28,12 +28,14 @@ function costoTipoVehiculo () {
     if(tipoVehiculo==1) {
         base = 2500
         console.log ("Prima por tipo de vehículo " + "$" + base )
-    }else{ 
+    }else if (tipoVehiculo==2){ 
         base = 3500
         console.log ("Prima por tipo de vehículo " + "$" + base )
-    }
+    }else{ 
+        alert ("Seleccione la opción correcta")
 
-}
+    }
+} 
 
 costoTipoVehiculo ();
 
@@ -58,4 +60,4 @@ console.log ( "Costo por cuota " + "$" + cuotaSeguro)
     break; 
  }
 
- alert ("El costo total del seguro es "+ "$" + seguro)
+ if (seguro>=1) {alert ("El costo total del seguro es "+ "$" + seguro)}
