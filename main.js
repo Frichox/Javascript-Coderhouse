@@ -14,9 +14,12 @@ function costoModelo () {
             modelo = 2000
             console.log ("Prima por modelo " + "$" + modelo )
             
-    }else{ 
+    }else if (anio>=2000){ 
             modelo = 3000
             console.log ("Prima por modelo " + "$" + modelo )
+    }else { 
+        alert ("El año ingresado no es válido")
+
     }
 
 }
