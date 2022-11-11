@@ -33,3 +33,10 @@ p {
     font-weight: 500;
     margin-left: 10px;   
 }
+footer {
+    background-color: rgba(16, 52, 166, 1);
+ }
+
+.pfooter {
+    text-align: center;
+}

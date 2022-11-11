@@ -18,10 +18,6 @@ let plan;
 
 let imponiblePlan;
 
-function TipoDeVehiculo(tipo, baseimponible) {
-    this.tipo = tipo;
-    this.baseimponible = Number(baseimponible);
-}
 
 let vehiculoMoto = new TipoDeVehiculo("Moto", 800)
 
@@ -48,7 +44,8 @@ form.addEventListener('submit', (evt)=> {
     modelo = 3000
     }else if (anio>2020 && anio<=2022){ 
     modelo = 3500
-    }else { alert ("El año ingresado no es válido. Si su vehículo es anterior al año 1990 no podemos ofrecerle cobertura.")}
+    }
+
      if(vehiculo==1) {
         base = Number (tiposdeVehiculo[0].baseimponible)
     }else if (vehiculo==2){ 
@@ -75,11 +72,23 @@ form.addEventListener('submit', (evt)=> {
 
     let cuotaSeguro = seguro / cuotas;
 
-    localStorage.setItem('datos', JSON.stringify({costoSeguro: seguro}))
+    localStorage.setItem('datos', JSON.stringify({costoSeguro: seguro,año:anio,tipo:vehiculo,cobertura:plan}))
     let datosStorage = localStorage.getItem('datos')
     let totalSeguro = JSON.parse(datosStorage)
+
+    document.getElementById('resultado').innerHTML+=`
+    <h3> Tus Datos </h3>
+    </div>
+    <p> Año: ${totalSeguro.año}</p> <p> Tipo de Vehículo: ${totalSeguro.tipo}</p> <p> Cobertura deseada: ${totalSeguro.cobertura}</p>
+    </div>`
     
-    document.body.innerHTML+=`
+    if (anio<1990 || anio>2022){document.getElementById('resultado').innerHTML+=`
+    <h3> Ha ocurrido un error!</h3>
+    </div>
+    <p>El año ingresado no es válido. Si su vehículo es anterior al año 1990 no podemos ofrecerle cobertura.</p>
+    </div>`
+    }  
+    else if(anio>=1990 && anio<=2022) {document.getElementById('resultado').innerHTML+=`
     <h3> Cotización:</h3>
     </div>
     <p> Prima total $${prima}</p>
@@ -87,8 +96,39 @@ form.addEventListener('submit', (evt)=> {
     <p> Costo total del seguro $${totalSeguro.costoSeguro}</p>
     <p> Costo por cuota $${cuotaSeguro}</p>
     <p>Si desea abonar el total del seguro de contado efectivo tendra 10% de descuento.</p>
-    </div>`
+    </div>`}
     
 })
 
+form.addEventListener('submit', (evt)=> {
+    event.preventDefault()
+    anio = year.value
+    vehiculo = tipoVehiculo.value
+    plan = cobertura.value
+
+    const enviarCliente = () => {
+        fetch("https://jsonplaceholder.typicode.com/posts",{
+            method: 'POST',
+            body: JSON.stringify({
+                año: 'año',
+                tipo: 'vehiculo',
+                cobertura: 'plan'
+            }),
+            headers: { 
+                'Content-type' : 'application/json; charset=UFT-8'
+            }
+            .then((respuesta)=>{
+                console.log(respuesta)
+                return respuesta.json ()
+            })
+            .then(apiPost =>{
+            console.log(apiPost)
+            })
+            .catch(err=>{
+            console.log(err)
+           })
+        })}
+
+    enviarCliente()   
+}) 
 
